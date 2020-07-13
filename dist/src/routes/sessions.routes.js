@@ -55,19 +55,20 @@ sessionsRouter.post('/', function (request, response) { return __awaiter(void 0,
             case 1:
                 user = _c.sent();
                 if (!user) {
-                    return [2 /*return*/, response.status(401).json({ message: 'no email' })];
+                    return [2 /*return*/, response.status(401).json({ message: 'Email ou senha incorretos.' })];
                 }
                 return [4 /*yield*/, bcryptjs_1.compare(password, user.password)];
             case 2:
                 passwordMatched = _c.sent();
                 if (!passwordMatched) {
-                    return [2 /*return*/, response.status(401).json({ message: 'no senha' })];
+                    return [2 /*return*/, response.status(401).json({ message: 'Email ou senha incorretos.' })];
                 }
                 _b = auth_1.default.jwt, secret = _b.secret, expiresIn = _b.expiresIn;
                 token = jsonwebtoken_1.sign({}, secret, {
                     subject: user.id,
                     expiresIn: expiresIn,
                 });
+                delete user.password;
                 return [2 /*return*/, response.json({ user: user, token: token })];
         }
     });

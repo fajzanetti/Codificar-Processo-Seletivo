@@ -45,13 +45,13 @@ var uuidv4_1 = require("uuidv4");
 var connection_1 = __importDefault(require("../database/connection"));
 var usersRouter = express_1.Router();
 usersRouter.get('/', function (request, response) { return __awaiter(void 0, void 0, void 0, function () {
-    var pessoas;
+    var users;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, connection_1.default('users').select('*')];
             case 1:
-                pessoas = _a.sent();
-                return [2 /*return*/, response.json(pessoas)];
+                users = _a.sent();
+                return [2 /*return*/, response.json(users)];
         }
     });
 }); });
@@ -61,7 +61,9 @@ usersRouter.post('/', function (request, response) { return __awaiter(void 0, vo
         switch (_b.label) {
             case 0:
                 _a = request.body, name = _a.name, email = _a.email, password = _a.password;
-                return [4 /*yield*/, connection_1.default('users').where('email', email).first()];
+                return [4 /*yield*/, connection_1.default('users')
+                        .where('email', email)
+                        .first()];
             case 1:
                 checkUserExists = _b.sent();
                 if (checkUserExists) {
@@ -79,6 +81,7 @@ usersRouter.post('/', function (request, response) { return __awaiter(void 0, vo
                 return [4 /*yield*/, connection_1.default('users').insert(user)];
             case 3:
                 _b.sent();
+                delete user.password;
                 return [2 /*return*/, response.json({ user: user })];
         }
     });
