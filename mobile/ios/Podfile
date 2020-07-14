@@ -22,12 +22,3 @@ target 'mobile' do
     flipper_post_install(installer)
   end
 end
-
-target 'mobile-tvOS' do
-  # Pods for mobile-tvOS
-
-  target 'mobile-tvOSTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
-end
