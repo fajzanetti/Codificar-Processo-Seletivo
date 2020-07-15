@@ -29,6 +29,11 @@
     "@typescript-eslint"
   ],
   "rules": {
+    "react/prop-types": "off",
+    "react/jsx-props-no-spreading": "off",
+    "arrow-parens": "off",
+    "implicit-arrow-linebreak": "off",
+    "operator-linebreak": "off",
     "prettier/prettier": "error",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
