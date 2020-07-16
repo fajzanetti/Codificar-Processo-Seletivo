@@ -69,8 +69,12 @@ const Input: React.RefForwardingComponent<InputRef, InputProps> = (
   }, []);
 
   return (
-    <Container>
-      <Icon name={icon} size={20} color="#83819A" />
+    <Container isFocused={isFocused} isErrored={!!error}>
+      <Icon
+        name={icon}
+        size={20}
+        color={isFocused || isFilled ? '#6C63FF' : '#83819A'}
+      />
 
       <TextInput
         ref={inputElementRef}
@@ -83,6 +87,8 @@ const Input: React.RefForwardingComponent<InputRef, InputProps> = (
         }}
         {...rest}
       />
+
+      {error && <Icon name="alert-circle" size={20} color="#C53030" />}
     </Container>
   );
 };

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import {
+  Alert,
   Image,
   KeyboardAvoidingView,
   Platform,
@@ -12,6 +13,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/mobile';
+import * as Yup from 'yup';
 
 import {
   Container,
@@ -20,16 +22,24 @@ import {
   CreateAccountButtonText,
 } from './styles';
 
+import getValidationErrors from '../../utils/getValidationErrors';
+
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 
 import logoImg from '../../assets/logo.png';
+
+interface SignInFormData {
+  email: string;
+  password: string;
+}
 
 const SignIn: React.FC = () => {
   const navigation = useNavigation();
 
   const formRef = useRef<FormHandles>(null);
   const passwordInputRef = useRef<TextInput>(null);
+  const emailInputRef = useRef<TextInput>(null);
 
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
@@ -49,8 +59,35 @@ const SignIn: React.FC = () => {
     };
   }, [isKeyboardVisible]);
 
-  const handleSignIn = useCallback((data: object) => {
-    console.log(data);
+  const handleSignIn = useCallback(async (data: SignInFormData) => {
+    try {
+      formRef.current?.setErrors({});
+
+      const schema = Yup.object().shape({
+        email: Yup.string().required().email(),
+        password: Yup.string().required(),
+      });
+
+      await schema.validate(data, { abortEarly: false });
+    } catch (err) {
+      if (err instanceof Yup.ValidationError) {
+        const errors = getValidationErrors(err);
+
+        formRef.current?.setErrors(errors);
+
+        Alert.alert(
+          'Informe e-mail e senha.',
+          'Digite seu e-mail e senha para login.',
+        );
+
+        return;
+      }
+
+      Alert.alert(
+        'Erro na autenticação.',
+        'Ocorreu um erro ao fazer login, cheque seu e-mail e/ou senha.',
+      );
+    }
   }, []);
 
   return (
@@ -78,6 +115,7 @@ const SignIn: React.FC = () => {
 
             <Form ref={formRef} onSubmit={handleSignIn}>
               <Input
+                ref={emailInputRef}
                 autoCorrect={false}
                 autoCapitalize="none"
                 keyboardType="email-address"
