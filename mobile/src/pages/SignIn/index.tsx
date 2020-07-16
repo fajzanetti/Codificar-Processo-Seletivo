@@ -15,19 +15,20 @@ import { FormHandles } from '@unform/core';
 import { Form } from '@unform/mobile';
 import * as Yup from 'yup';
 
-import {
-  Container,
-  Title,
-  CreateAccountButton,
-  CreateAccountButtonText,
-} from './styles';
-
+import { useAuth } from '../../hooks/auth';
 import getValidationErrors from '../../utils/getValidationErrors';
 
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 
 import logoImg from '../../assets/logo.png';
+
+import {
+  Container,
+  Title,
+  CreateAccountButton,
+  CreateAccountButtonText,
+} from './styles';
 
 interface SignInFormData {
   email: string;
@@ -36,6 +37,8 @@ interface SignInFormData {
 
 const SignIn: React.FC = () => {
   const navigation = useNavigation();
+
+  const { signIn } = useAuth();
 
   const formRef = useRef<FormHandles>(null);
   const passwordInputRef = useRef<TextInput>(null);
@@ -46,11 +49,9 @@ const SignIn: React.FC = () => {
   useEffect(() => {
     const keyboardShow = Keyboard.addListener('keyboardDidShow', () => {
       setKeyboardVisible(true);
-      console.log('show', isKeyboardVisible);
     });
     const keyboardHide = Keyboard.addListener('keyboardDidHide', () => {
       setKeyboardVisible(false);
-      console.log('hide', isKeyboardVisible);
     });
 
     return () => {
@@ -59,36 +60,44 @@ const SignIn: React.FC = () => {
     };
   }, [isKeyboardVisible]);
 
-  const handleSignIn = useCallback(async (data: SignInFormData) => {
-    try {
-      formRef.current?.setErrors({});
+  const handleSignIn = useCallback(
+    async (data: SignInFormData) => {
+      try {
+        formRef.current?.setErrors({});
 
-      const schema = Yup.object().shape({
-        email: Yup.string().required().email(),
-        password: Yup.string().required(),
-      });
+        const schema = Yup.object().shape({
+          email: Yup.string().required().email(),
+          password: Yup.string().required(),
+        });
 
-      await schema.validate(data, { abortEarly: false });
-    } catch (err) {
-      if (err instanceof Yup.ValidationError) {
-        const errors = getValidationErrors(err);
+        await schema.validate(data, { abortEarly: false });
 
-        formRef.current?.setErrors(errors);
+        await signIn({
+          email: data.email,
+          password: data.password,
+        });
+      } catch (err) {
+        if (err instanceof Yup.ValidationError) {
+          const errors = getValidationErrors(err);
+
+          formRef.current?.setErrors(errors);
+
+          Alert.alert(
+            'Informe e-mail e senha.',
+            'Digite seu e-mail e senha para login.',
+          );
+
+          return;
+        }
 
         Alert.alert(
-          'Informe e-mail e senha.',
-          'Digite seu e-mail e senha para login.',
+          'Erro na autenticação.',
+          'Ocorreu um erro ao fazer login, cheque seu e-mail e/ou senha.',
         );
-
-        return;
       }
-
-      Alert.alert(
-        'Erro na autenticação.',
-        'Ocorreu um erro ao fazer login, cheque seu e-mail e/ou senha.',
-      );
-    }
-  }, []);
+    },
+    [signIn],
+  );
 
   return (
     <>

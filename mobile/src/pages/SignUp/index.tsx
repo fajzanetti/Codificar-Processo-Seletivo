@@ -16,6 +16,7 @@ import { Form } from '@unform/mobile';
 import * as Yup from 'yup';
 
 import getValidationErrors from '../../utils/getValidationErrors';
+import api from '../../services/api';
 
 import { Container, Title, BackToSignIn, BackToSignInText } from './styles';
 
@@ -54,36 +55,49 @@ const SignUp: React.FC = () => {
       keyboardShow.remove();
     };
   }, [isKeyboardVisible]);
-  const handleSignUp = useCallback(async (data: SignUpFormData) => {
-    try {
-      formRef.current?.setErrors({});
 
-      const schema = Yup.object().shape({
-        name: Yup.string().required(),
-        email: Yup.string().required().email(),
-        password: Yup.string().required(),
-      });
+  const handleSignUp = useCallback(
+    async (data: SignUpFormData) => {
+      try {
+        formRef.current?.setErrors({});
 
-      await schema.validate(data, { abortEarly: false });
-    } catch (err) {
-      if (err instanceof Yup.ValidationError) {
-        const errors = getValidationErrors(err);
+        const schema = Yup.object().shape({
+          name: Yup.string().required(),
+          email: Yup.string().required().email(),
+          password: Yup.string().required(),
+        });
 
-        formRef.current?.setErrors(errors);
+        await schema.validate(data, { abortEarly: false });
+
+        await api.post('/users', data);
+
         Alert.alert(
-          'Informe seus dados.',
-          'Digite seu nome, e-mail e senha para cadastro.',
+          'Cadatro realizado com sucesso.',
+          'Já pode fazer seu login na aplicação.',
         );
 
-        return;
-      }
+        navigation.goBack();
+      } catch (err) {
+        if (err instanceof Yup.ValidationError) {
+          const errors = getValidationErrors(err);
 
-      Alert.alert(
-        'Erro no cadastro.',
-        'Ocorreu um erro ao fazer cadastro, tente novamente.',
-      );
-    }
-  }, []);
+          formRef.current?.setErrors(errors);
+          Alert.alert(
+            'Informe seus dados.',
+            'Digite seu nome, e-mail e senha para cadastro.',
+          );
+
+          return;
+        }
+
+        Alert.alert(
+          'Erro no cadastro.',
+          'Ocorreu um erro ao fazer cadastro, tente novamente.',
+        );
+      }
+    },
+    [navigation],
+  );
 
   return (
     <>
