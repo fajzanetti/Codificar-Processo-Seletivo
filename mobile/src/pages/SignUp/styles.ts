@@ -12,14 +12,6 @@ export const Container = styled.View`
   bottom: 32px;
 `;
 
-export const Image = styled.Image<Keyboard>`
-  ${props =>
-    props.isKeyboard &&
-    css`
-      top: 64px;
-    `}
-`;
-
 export const Title = styled.Text`
   font-size: 24px;
   color: #3f3d56;

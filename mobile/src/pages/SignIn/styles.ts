@@ -1,23 +1,11 @@
 import styled, { css } from 'styled-components/native';
 
-interface Keyboard {
-  isKeyboard: boolean;
-}
-
 export const Container = styled.View`
   flex: 1;
   align-items: center;
   justify-content: center;
   padding: 0 30px;
   bottom: 32px;
-`;
-
-export const Image = styled.Image<Keyboard>`
-  ${props =>
-    props.isKeyboard &&
-    css`
-      top: 64px;
-    `}
 `;
 
 export const Title = styled.Text`

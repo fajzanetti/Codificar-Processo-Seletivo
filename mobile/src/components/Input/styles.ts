@@ -1,4 +1,4 @@
-import styled from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 
 export const Container = styled.View`
@@ -6,6 +6,8 @@ export const Container = styled.View`
   height: 60px;
   padding: 0 16px;
   background: #fff;
+  border-width: 2px;
+  border-color: #fff;
   border-radius: 50px;
   margin-bottom: 8px;
 

@@ -1,21 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
+  Image,
   KeyboardAvoidingView,
   Platform,
   View,
   ScrollView,
   Keyboard,
+  TextInput,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
+import { FormHandles } from '@unform/core';
+import { Form } from '@unform/mobile';
 
-import {
-  Container,
-  Image,
-  Title,
-  BackToSignIn,
-  BackToSignInText,
-} from './styles';
+import { Container, Title, BackToSignIn, BackToSignInText } from './styles';
 
 import Button from '../../components/Button';
 import Input from '../../components/Input';
@@ -24,6 +22,11 @@ import logoImg from '../../assets/logo.png';
 
 const SignUp: React.FC = () => {
   const navigation = useNavigation();
+
+  const formRef = useRef<FormHandles>(null);
+  const passwordInputRef = useRef<TextInput>(null);
+  const emailInputRef = useRef<TextInput>(null);
+
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
   useEffect(() => {
@@ -40,7 +43,7 @@ const SignUp: React.FC = () => {
       keyboardHide.remove();
       keyboardShow.remove();
     };
-  }, []);
+  }, [isKeyboardVisible]);
 
   return (
     <>
@@ -56,26 +59,59 @@ const SignUp: React.FC = () => {
           <Container
             style={
               isKeyboardVisible && {
-                bottom: 100,
+                bottom: 72,
               }
             }
           >
-            <Image isKeyboard={isKeyboardVisible} source={logoImg} />
+            <Image source={logoImg} />
             <View>
               <Title>Crie sua conta</Title>
             </View>
 
-            <Input name="name" icon="user" placeholder="Nome" />
-            <Input name="email" icon="mail" placeholder="E-mail" />
-            <Input name="password" icon="lock" placeholder="Senha" />
+            <Form ref={formRef} onSubmit={() => { }}>
+              <Input
+                autoCapitalize="words"
+                name="name"
+                icon="user"
+                placeholder="Nome"
+                returnKeyType="next"
+                onSubmitEditing={() => {
+                  emailInputRef.current?.focus();
+                }}
+              />
+              <Input
+                ref={emailInputRef}
+                autoCorrect={false}
+                autoCapitalize="none"
+                keyboardType="email-address"
+                name="email"
+                icon="mail"
+                placeholder="E-mail"
+                returnKeyType="next"
+                onSubmitEditing={() => {
+                  passwordInputRef.current?.focus();
+                }}
+              />
+              <Input
+                ref={passwordInputRef}
+                secureTextEntry
+                name="password"
+                icon="lock"
+                placeholder="Senha"
+                returnKeyType="go"
+                onSubmitEditing={() => {
+                  formRef.current?.submitForm();
+                }}
+              />
 
-            <Button
-              onPress={() => {
-                console.log('deu');
-              }}
-            >
-              Cadastrar
-            </Button>
+              <Button
+                onPress={() => {
+                  formRef.current?.submitForm();
+                }}
+              >
+                Cadastrar
+              </Button>
+            </Form>
           </Container>
         </ScrollView>
       </KeyboardAvoidingView>
