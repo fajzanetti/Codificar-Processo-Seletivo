@@ -9,14 +9,14 @@ export const Container = styled.View`
   align-items: center;
   justify-content: center;
   padding: 0 30px;
-  opacity: 1;
+  bottom: 32px;
 `;
 
 export const Image = styled.Image<Keyboard>`
   ${props =>
     props.isKeyboard &&
     css`
-      opacity: 0;
+      top: 64px;
     `}
 `;
 
@@ -25,7 +25,7 @@ export const Title = styled.Text`
   color: #3f3d56;
   font-family: 'RobotoSlab-Medium';
 
-  margin: 64px 0 24px;
+  margin: 0 0 24px;
 `;
 
 export const BackToSignIn = styled.TouchableOpacity`

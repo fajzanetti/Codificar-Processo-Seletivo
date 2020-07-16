@@ -7,6 +7,7 @@ import {
   Keyboard,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
+import { useNavigation } from '@react-navigation/native';
 
 import {
   Container,
@@ -22,6 +23,7 @@ import Input from '../../components/Input';
 import logoImg from '../../assets/logo.png';
 
 const SignIn: React.FC = () => {
+  const navigation = useNavigation();
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
   useEffect(() => {
@@ -54,7 +56,7 @@ const SignIn: React.FC = () => {
           <Container
             style={
               isKeyboardVisible && {
-                bottom: 100,
+                bottom: 72,
               }
             }
           >
@@ -77,11 +79,7 @@ const SignIn: React.FC = () => {
         </ScrollView>
       </KeyboardAvoidingView>
       {!isKeyboardVisible && (
-        <CreateAccountButton
-          onPress={() => {
-            console.log('deu');
-          }}
-        >
+        <CreateAccountButton onPress={() => navigation.navigate('SignUp')}>
           <Icon name="log-in" size={20} color="#6c63ff" />
           <CreateAccountButtonText>Criar uma conta</CreateAccountButtonText>
         </CreateAccountButton>

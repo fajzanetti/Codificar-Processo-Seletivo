@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import {
-  ImageBackground,
   KeyboardAvoidingView,
   Platform,
   View,
@@ -8,6 +7,7 @@ import {
   Keyboard,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
+import { useNavigation } from '@react-navigation/native';
 
 import {
   Container,
@@ -20,9 +20,10 @@ import {
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 
-import titleImg from '../../assets/title.png';
+import logoImg from '../../assets/logo.png';
 
 const SignUp: React.FC = () => {
+  const navigation = useNavigation();
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
   useEffect(() => {
@@ -59,7 +60,7 @@ const SignUp: React.FC = () => {
               }
             }
           >
-            <Image isKeyboard={isKeyboardVisible} source={titleImg} />
+            <Image isKeyboard={isKeyboardVisible} source={logoImg} />
             <View>
               <Title>Crie sua conta</Title>
             </View>
@@ -79,11 +80,7 @@ const SignUp: React.FC = () => {
         </ScrollView>
       </KeyboardAvoidingView>
       {!isKeyboardVisible && (
-        <BackToSignIn
-          onPress={() => {
-            console.log('deu');
-          }}
-        >
+        <BackToSignIn onPress={() => navigation.goBack()}>
           <Icon name="arrow-left" size={20} color="#6c63ff" />
           <BackToSignInText>Voltar para logon</BackToSignInText>
         </BackToSignIn>
