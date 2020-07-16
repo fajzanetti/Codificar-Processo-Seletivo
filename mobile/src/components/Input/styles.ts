@@ -6,7 +6,7 @@ export const Container = styled.View`
   height: 60px;
   padding: 0 16px;
   background: #fff;
-  border-radius: 10px;
+  border-radius: 50px;
   margin-bottom: 8px;
 
   flex-direction: row;
@@ -20,5 +20,5 @@ export const TextInput = styled.TextInput`
 `;
 
 export const Icon = styled(FeatherIcon)`
-  margin-right: 16px;
+  margin: 0 8px;
 `;
