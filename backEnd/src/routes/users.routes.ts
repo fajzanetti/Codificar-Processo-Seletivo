@@ -3,6 +3,7 @@ import { hash } from 'bcryptjs';
 import { uuid } from 'uuidv4';
 
 import knex from '../database/connection';
+import dateToDMYHM from '../utils/formatDate';
 
 const usersRouter = Router();
 
@@ -11,6 +12,8 @@ interface userData {
   name: string;
   email: string;
   password: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 usersRouter.get('/', async (request, response) => {
@@ -32,11 +35,15 @@ usersRouter.post('/', async (request, response) => {
 
   const hashedPassword = await hash(password, 8);
 
+  const date = dateToDMYHM(new Date());
+
   const user = {
     id: uuid(),
     name,
     email,
     password: hashedPassword,
+    createdAt: date,
+    updatedAt: date,
   } as userData;
 
   await knex('users').insert(user);

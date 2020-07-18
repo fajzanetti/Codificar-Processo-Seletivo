@@ -4,8 +4,10 @@ export async function up(knex: Knex): Promise<void> {
   return knex.schema.createTable('posts', table => {
     table.uuid('id').primary();
     table.string('text', 280).notNullable();
-    table.timestamp('createdAt').defaultTo(knex.fn.now());
-    table.timestamp('updatedAt').defaultTo(knex.fn.now());
+    table.integer('like');
+    table.integer('unlike');
+    table.timestamp('createdAt').defaultTo(Date());
+    table.timestamp('updatedAt').defaultTo(Date());
 
     table.string('author').notNullable();
     table.string('authorId').notNullable().references('id').inTable('users');

@@ -43,11 +43,9 @@ const SignUp: React.FC = () => {
   useEffect(() => {
     const keyboardShow = Keyboard.addListener('keyboardDidShow', () => {
       setKeyboardVisible(true);
-      console.log('show', isKeyboardVisible);
     });
     const keyboardHide = Keyboard.addListener('keyboardDidHide', () => {
       setKeyboardVisible(false);
-      console.log('hide', isKeyboardVisible);
     });
 
     return () => {

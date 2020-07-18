@@ -42,6 +42,7 @@
     "react-hooks/exhaustive-deps": "warn",
     "react/jsx-props-no-spreading": "off",
     "@typescript-eslint/ban-types": "off",
+    "import/no-duplicates": "off",
     "@typescript-eslint/no-unused-vars": "warn",
     "@typescript-eslint/no-explicit-any": "warn",
     "@typescript-eslint/no-empty-function": "warn",

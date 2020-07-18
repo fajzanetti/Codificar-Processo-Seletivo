@@ -38,7 +38,7 @@ interface SignInFormData {
 const SignIn: React.FC = () => {
   const navigation = useNavigation();
 
-  const { signIn } = useAuth();
+  const { signIn, user } = useAuth();
 
   const formRef = useRef<FormHandles>(null);
   const passwordInputRef = useRef<TextInput>(null);
