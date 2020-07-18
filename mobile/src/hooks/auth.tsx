@@ -14,6 +14,7 @@ interface AuthState {
   user: {
     id: string;
     name: string;
+    avatar: string;
   };
 }
 

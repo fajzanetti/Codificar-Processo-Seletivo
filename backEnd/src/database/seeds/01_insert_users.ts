@@ -1,19 +1,27 @@
 import Knex from 'knex';
+import { hash } from 'bcryptjs';
 import { uuid } from 'uuidv4';
+import dateToDMYHM from '../../utils/formatDate';
 
 export async function seed(knex: Knex): Promise<void> {
   await knex('users').insert([
     {
       id: uuid(),
-      nome: 'Felipe Zanetti',
+      name: 'Felipe Zanetti',
       email: 'felipeajz@hotmail.com',
-      senha: '123456',
+      avatar: '',
+      password: await hash('123456', 8),
+      createdAt: dateToDMYHM(new Date()),
+      updatedAt: dateToDMYHM(new Date()),
     },
     {
       id: uuid(),
-      nome: 'Carlos Severino',
+      name: 'Carlos Severino',
       email: 'carlos@gmail.com',
-      senha: '123456',
+      avatar: '',
+      password: await hash('654321', 8),
+      createdAt: dateToDMYHM(new Date()),
+      updatedAt: dateToDMYHM(new Date()),
     },
   ]);
 }

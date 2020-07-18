@@ -12,6 +12,7 @@ interface userData {
   name: string;
   email: string;
   password: string;
+  avatar: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -42,6 +43,7 @@ usersRouter.post('/', async (request, response) => {
     name,
     email,
     password: hashedPassword,
+    avatar: '../../assets/avatar.png',
     createdAt: date,
     updatedAt: date,
   } as userData;

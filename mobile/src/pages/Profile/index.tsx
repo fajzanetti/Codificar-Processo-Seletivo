@@ -1,4 +1,3 @@
-/* eslint-disable global-require */
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Alert, FlatList, ScrollView, Modal } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -32,7 +31,7 @@ import {
   TitleModal,
   TextModal,
 } from './styles';
-import { Author } from '../Main/styles';
+import avatarImg from '../../assets/avatar.png';
 
 interface PostData {
   id: string;
@@ -52,6 +51,7 @@ interface ModalProps {
 interface UserProps {
   id: string;
   name: string;
+  avatar: string;
 }
 
 interface FormAddPost {
@@ -60,6 +60,8 @@ interface FormAddPost {
 }
 
 const Profile: React.FC = () => {
+  // eslint-disable-next-line no-console
+  console.disableYellowBox = true;
   const navigation = useNavigation();
 
   const formRef = useRef<FormHandles>(null);
@@ -96,7 +98,6 @@ const Profile: React.FC = () => {
 
   const handleEditPost = useCallback(
     async (post: FormAddPost) => {
-      console.log(postModal.id);
       try {
         formRef.current?.setErrors({});
 
@@ -186,12 +187,15 @@ const Profile: React.FC = () => {
   );
 
   return (
-    <ScrollView keyboardShouldPersistTaps="handled">
-      <LogOut onPress={signOut}>
-        <Icon name="log-out" size={28} color="#3f3d56" />
-      </LogOut>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      keyboardShouldPersistTaps="handled"
+    >
       <UserDetail>
-        <Avatar source={require('../../assets/avatar.png')} />
+        <LogOut onPress={signOut}>
+          <Icon name="log-out" size={28} color="#3f3d56" />
+        </LogOut>
+        <Avatar source={avatarImg} />
         <Title style={{ fontSize: 42 }}>{UserName}</Title>
 
         <Form
@@ -223,22 +227,25 @@ const Profile: React.FC = () => {
           data={posts}
           keyExtractor={incident => incident.id}
           showsVerticalScrollIndicator={false}
-          // extraData={posts}
           onTouchStart={loadMyPosts}
           renderItem={({ item: incident }) => (
-            <Post>
+            <Post key={incident.id}>
               <Header>
                 <UpdateAt>{incident.updatedAt}</UpdateAt>
               </Header>
               <Text>{incident.text}</Text>
               <Interaction>
-                <ButtonLike onPress={() => console.log('like')} disabled>
-                  <Icon name="thumbs-up" size={20} color="#83819A" />
-                  <Liketext style={{ color: '#83819A' }}>100</Liketext>
+                <ButtonLike disabled>
+                  <Icon name="thumbs-up" size={20} color="#a5a3ac" />
+                  <Liketext style={{ color: '#a5a3ac' }}>
+                    {incident.like}
+                  </Liketext>
                 </ButtonLike>
-                <ButtonLike onPress={signOut} disabled>
-                  <Icon name="thumbs-down" size={20} color="#83819A" />
-                  <Liketext style={{ color: '#83819A' }}>3</Liketext>
+                <ButtonLike disabled>
+                  <Icon name="thumbs-down" size={20} color="#a5a3ac" />
+                  <Liketext style={{ color: '#a5a3ac' }}>
+                    {incident.unlike}
+                  </Liketext>
                 </ButtonLike>
                 <ButtonLike
                   onPress={() => {
@@ -246,8 +253,8 @@ const Profile: React.FC = () => {
                     setModalVisible(true);
                   }}
                 >
-                  <Icon name="edit" size={20} color="#83819A" />
-                  <Liketext style={{ color: '#83819A' }}>Editar</Liketext>
+                  <Icon name="edit" size={20} color="#3F3D56" />
+                  <Liketext style={{ color: '#3F3D56' }}>Editar</Liketext>
                 </ButtonLike>
                 <ButtonLike
                   onPress={() => {
@@ -282,6 +289,7 @@ const Profile: React.FC = () => {
 
             <Form
               style={{
+                paddingHorizontal: 16,
                 flexDirection: 'row',
                 position: 'absolute',
                 bottom: 0,
