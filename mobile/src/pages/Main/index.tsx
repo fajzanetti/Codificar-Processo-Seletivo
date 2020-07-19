@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { FlatList } from 'react-native';
-import { parseISO, format } from 'date-fns';
-import ptBR from 'date-fns/locale/pt-BR';
 
 import { useAuth } from '../../hooks/auth';
 import api from '../../services/api';

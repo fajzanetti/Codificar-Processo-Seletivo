@@ -67,8 +67,15 @@ const SignUp: React.FC = () => {
 
         await schema.validate(data, { abortEarly: false });
 
-        await api.post('/users', data);
+        const response = await api.post('/users', data);
 
+        if (response.data.message !== undefined) {
+          Alert.alert(
+            response.data.message,
+            'Este usuário já está cadastro no sistema.',
+          );
+          return;
+        }
         Alert.alert(
           'Cadatro realizado com sucesso.',
           'Já pode fazer seu login na aplicação.',

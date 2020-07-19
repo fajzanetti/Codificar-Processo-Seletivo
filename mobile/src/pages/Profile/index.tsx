@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Alert, FlatList, ScrollView, Modal } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { Alert, FlatList, ScrollView, Modal, View, TextInput } from 'react-native';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/mobile';
 import * as Yup from 'yup';
@@ -62,26 +61,17 @@ interface FormAddPost {
 const Profile: React.FC = () => {
   // eslint-disable-next-line no-console
   console.disableYellowBox = true;
-  const navigation = useNavigation();
 
   const formRef = useRef<FormHandles>(null);
+  const inputRef = useRef<TextInput>(null);
 
   const [modalVisible, setModalVisible] = useState(false);
+  const [render, setRender] = useState(false);
   const [postModal, setPostModal] = useState<ModalProps>({} as ModalProps);
   const [posts, setPosts] = useState<PostData[]>([]);
 
   const { signOut, token, user } = useAuth();
   const { name: UserName } = user as UserProps;
-
-  const loadMyPosts = useCallback(async () => {
-    const response = await api.get('/posts/myPosts', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    setPosts(response.data.reverse());
-  }, [token]);
 
   useEffect(() => {
     async function loadMyPosts() {
@@ -94,7 +84,8 @@ const Profile: React.FC = () => {
       setPosts(response.data.reverse());
     }
     loadMyPosts();
-  }, [token]);
+    setRender(false)
+  }, [render, token]);
 
   const handleEditPost = useCallback(
     async (post: FormAddPost) => {
@@ -119,24 +110,20 @@ const Profile: React.FC = () => {
         setPosts(posts.map(post => (post.id === postModal.id ? data : post)));
         setPostModal({ id: '', text: '' });
         setModalVisible(false);
+        setRender(true)
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
 
           formRef.current?.setErrors(errors);
         }
-
-        Alert.alert(
-          'Erro no envio do post.',
-          'Ocorreu um erro ao fazer enviar o post, tente novamente.',
-        );
       }
     },
     [token, posts, postModal],
   );
 
   const handleAddPost = useCallback(
-    async (post: FormAddPost, { reset }) => {
+    async (post: FormAddPost) => {
       try {
         formRef.current?.setErrors({});
 
@@ -156,32 +143,37 @@ const Profile: React.FC = () => {
           },
         );
         setPosts([...posts, data]);
-        reset();
-        navigation.navigate('Main');
-        // navigation.navigate('User');
+        setRender(true)
+        formRef.current?.reset({ text: '' })
+        inputRef.current?.clear()
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
 
           formRef.current?.setErrors(errors);
         }
-
-        Alert.alert(
-          'Erro no envio do post.',
-          'Ocorreu um erro ao fazer enviar o post, tente novamente.',
-        );
       }
     },
-    [navigation, token, posts],
+    [token, posts],
   );
 
   const handleDeletePost = useCallback(
     async (id: string) => {
-      api.delete(`/posts/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      Alert.alert('Deseja deletar este post ?', '', [{
+        text: 'Sim',
+        onPress: () => {
+          api.delete(`/posts/${id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          setRender(true)
         },
-      });
+      },
+      {
+        text: 'Não',
+        onPress: () => { return },
+      }])
     },
     [token],
   );
@@ -206,6 +198,7 @@ const Profile: React.FC = () => {
           onSubmit={handleAddPost}
         >
           <InputPost
+            ref={inputRef}
             maxLength={280}
             multiline
             autoCapitalize="sentences"
@@ -227,7 +220,7 @@ const Profile: React.FC = () => {
           data={posts}
           keyExtractor={incident => incident.id}
           showsVerticalScrollIndicator={false}
-          onTouchStart={loadMyPosts}
+          // onTouchStart={loadMyPosts}
           renderItem={({ item: incident }) => (
             <Post key={incident.id}>
               <Header>
@@ -273,52 +266,54 @@ const Profile: React.FC = () => {
           transparent
           visible={modalVisible}
           onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
+            setModalVisible(false);
           }}
         >
-          <ModalContainer>
-            <ButtonModalCancel
-              onPress={() => {
-                setModalVisible(false);
-              }}
-            >
-              <Icon name="x" size={32} color="#c53030" />
-            </ButtonModalCancel>
-            <TitleModal>Editar Ideal</TitleModal>
-            <TextModal>{postModal.text}</TextModal>
-
-            <Form
-              style={{
-                paddingHorizontal: 16,
-                flexDirection: 'row',
-                position: 'absolute',
-                bottom: 0,
-              }}
-              ref={formRef}
-              onSubmit={handleEditPost}
-            >
-              <InputPost
-                isModal
-                maxLength={280}
-                multiline
-                autoCapitalize="sentences"
-                name="editar"
-                icon="file-text"
-                placeholder="Editar"
-              />
-              <ButtonAddPost
-                style={{ backgroundColor: '#3f3d56' }}
+          <View style={{ flex: 1, backgroundColor: 'rgba(61,61,86,0.6)' }} >
+            <ModalContainer>
+              <ButtonModalCancel
                 onPress={() => {
-                  formRef.current?.submitForm();
+                  setModalVisible(false);
                 }}
               >
-                <Icon name="edit-3" size={28} color="#fff" />
-              </ButtonAddPost>
-            </Form>
-          </ModalContainer>
+                <Icon name="x" size={32} color="#c53030" />
+              </ButtonModalCancel>
+              <TitleModal>Editar Ideal</TitleModal>
+              <TextModal>{postModal.text}</TextModal>
+
+              <Form
+                style={{
+                  paddingHorizontal: 16,
+                  flexDirection: 'row',
+                  position: 'absolute',
+                  bottom: 0,
+                }}
+                ref={formRef}
+                onSubmit={handleEditPost}
+              >
+                <InputPost
+                  isModal
+                  maxLength={280}
+                  multiline
+                  autoCapitalize="sentences"
+                  name="editar"
+                  icon="file-text"
+                  placeholder="Editar"
+                />
+                <ButtonAddPost
+                  style={{ backgroundColor: '#3f3d56' }}
+                  onPress={() => {
+                    formRef.current?.submitForm();
+                  }}
+                >
+                  <Icon name="edit-3" size={28} color="#fff" />
+                </ButtonAddPost>
+              </Form>
+            </ModalContainer>
+          </View>
         </Modal>
       </Container>
-    </ScrollView>
+    </ScrollView >
   );
 };
 
