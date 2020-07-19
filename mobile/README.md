@@ -11,7 +11,7 @@
 </p>
 <p align="center">
   <a href="#-Sobre-o-desafio">🚀 Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-Projeto">💻 Layout</a>
+  <a href="#-Começando">💻 Começando</a>
 </p>
 
 # 🚀 Tecnologias
@@ -31,6 +31,8 @@ Este projeto foi desenvolvido com as seguintes tecnologias:
 * [unform](https://unform.dev/) : Para a criação e desempenho dos formulários;
 * [yup](https://github.com/jquense/yup#readme) : Para anásile e validação dos formulários;
 * [styled-components](https://styled-components.com/) : Para fazer a estilização com aplicativo;
+
+# 💻 Começando
 
 ## Exigências
 

@@ -11,7 +11,7 @@
 </p>
 <p align="center">
   <a href="#-Sobre-o-desafio">🚀 Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-Projeto">💻 Layout</a>
+  <a href="#-Começando">💻 Começando</a>
 </p>
 
 # 🚀 Tecnologias
@@ -30,7 +30,6 @@ Este projeto foi desenvolvido com as seguintes tecnologias:
 * [sqlite3](https://www.sqlite.org/index.html) : É o banco que escolhi para criação desta API, mas como o banck-end, foi feito com o Knex JS, é possivel fazer a alteração do BD;
 * [uuidv4](https://www.npmjs.com/package/uuidv4) : Para gerar ID´s unicas.
 
-
 # 💻 Começando
 
 ## Exigências
@@ -39,7 +38,7 @@ Este projeto foi desenvolvido com as seguintes tecnologias:
 
 ## Opcional
 * [Insomnia](https://insomnia.rest/)
-> Faça o download do Insomnia e importe o arquivo `Insomnia.json`.
+> Faça o download do Insomnia e importe o arquivo `Insomnia.json` dentro da pasta [.github](https://github.com/fajzanetti/Codificar-Processo-Seletivo/tree/master/.github).
 
 Clone o projeto e acesse a pasta `backend`
 
