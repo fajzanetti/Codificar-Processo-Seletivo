@@ -1,14 +1,13 @@
+<div align="center">
+    <img alt="Get Repos" title="Get Repos" src="../.github/logo.png" width='250px'/>
+</div>
 <p align="center">
     <a href="https://github.com/fajzanetti">
-        <img src="https://img.shields.io/badge/GitHub-fajzanetti-34CB79?logo=GitHub"/>
+        <img src="https://img.shields.io/badge/GitHub-fajzanetti-6c63ff?logo=GitHub"/>
     </a>
     <a href="https://www.linkedin.com/in/felipezanetti/">
-        <img src="https://img.shields.io/badge/Linkedin-felipezanetti-34CB79?logo=linkedin"/>
+        <img src="https://img.shields.io/badge/Linkedin-felipezanetti-6c63ff?logo=linkedin"/>
     </a>
-    <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/fajzanetti/Codificar-Processo-Seletivo?color=34CB79" />
-    <img alt="GitHub language top" src="https://img.shields.io/github/languages/top/fajzanetti/Codificar-Processo-Seletivo?color=34CB79" />
-    <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/fajzanetti/Codificar-Processo-Seletivo?color=34CB79" />
-    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/fajzanetti/Codificar-Processo-Seletivo?color=34CB79" />
 </p>
 <p align="center">
   <a href="#-Sobre-o-desafio">🚀 Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
@@ -38,6 +37,38 @@ Este projeto foi desenvolvido com as seguintes tecnologias:
 * [Node.JS](https://nodejs.org/en/)
 * [yarn](https://classic.yarnpkg.com/lang/en/) ou [npm](https://www.npmjs.com/)
 
+## Opcional
+* [Insomnia](https://insomnia.rest/)
+> Faça o download do Insomnia e importe o arquivo `Insomnia.json`.
+
+Clone o projeto e acesse a pasta `backend`
+
+```sh
+# Clone o repositótio
+git clone https://github.com/fajzanetti/Codificar-Processo-Seletivo.git
+
+# Acessar a pasta mobile
+cd backend
+```
+
+Siga os passos abaixo
+
+```sh
+# Instale as dependências usando yarn/npm
+yarn
+
+# Crie a instância do SQLite3 usando o Knex
+yarn knex:migrate
+# Agora popule o banco de dados para teste
+yarn knex:seed
+# Caso queira desfazer a criação e população do banco o comando `yarn knex:rollback` setá disponivel
+
+# Para concluir, execute o serviço da API
+yarn dev:server
+
+# Muito bem, servidor iniciado!
+```
+
 ---
 
-Desenvolvido com 💚 por [Felipe Zanetti!](https://www.linkedin.com/in/felipezanetti/)
+Desenvolvido com 💜 por [Felipe Zanetti!](https://www.linkedin.com/in/felipezanetti/)
