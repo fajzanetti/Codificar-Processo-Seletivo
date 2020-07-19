@@ -40,6 +40,8 @@ Este projeto foi desenvolvido com as seguintes tecnologias:
 * [Insomnia](https://insomnia.rest/)
 > Faça o download do Insomnia e importe o arquivo `Insomnia.json` dentro da pasta [.github](https://github.com/fajzanetti/Codificar-Processo-Seletivo/tree/master/.github).
 
+## Siga os passos abaixo
+
 Clone o projeto e acesse a pasta `backend`
 
 ```sh
@@ -49,8 +51,6 @@ git clone https://github.com/fajzanetti/Codificar-Processo-Seletivo.git
 # Acessar a pasta mobile
 cd backend
 ```
-
-Siga os passos abaixo
 
 ```sh
 # Instale as dependências usando yarn/npm

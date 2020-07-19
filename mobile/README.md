@@ -39,6 +39,8 @@ Este projeto foi desenvolvido com as seguintes tecnologias:
 * O back-end deve estar em execução
 > Acesse aqui: [Back-end](https://github.com/fajzanetti/Codificar-Processo-Seletivo/tree/master/backEnd#readme)
 
+## Siga os passos abaixo
+
 Clone o projeto e acesse a pasta `mobile`
 
 > Caso já tenha feito os passos do `backend`, não é necessário clonar novamente do github.
