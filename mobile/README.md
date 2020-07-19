@@ -37,6 +37,7 @@ Este projeto foi desenvolvido com as seguintes tecnologias:
 ## Exigências
 
 * O back-end deve estar em execução
+> Acesse aqui: [Back-end](https://github.com/fajzanetti/Codificar-Processo-Seletivo/tree/master/backEnd#readme)
 
 Clone o projeto e acesse a pasta `mobile`
 
