@@ -11,7 +11,8 @@
 </p>
 <p align="center">
   <a href="#-Sobre-o-desafio">🚀 Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-Começando">💻 Começando</a>
+  <a href="#-Começando">💻 Começando</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-Layout">🎈 Layout</a>
 </p>
 
 # 🚀 Tecnologias
@@ -76,6 +77,17 @@ $ yarn android
 # Se você deseja emular com o iOS, execute este comando
 $ yarn ios
 ```
+
+# 🎈 Layout
+
+<div align="center">
+    <img alt="Splash Screen" title="Splash Screen" src="../.github/layout/00.png" width='250px'/>
+    <img alt="Sign In" title="Sign In" src="../.github/layout/01.png" width='250px'/>
+    <img alt="Sign Up" title="Sign Up" src="../.github/layout/02.png" width='250px'/>
+    <img alt="Home" title="Home" src="../.github/layout/03.png" width='250px'/>
+    <img alt="Profile" title="Profile" src="../.github/layout/04.png" width='250px'/>
+    <img alt="Editing" title="Editing" src="../.github/layout/05.png" width='250px'/>
+</div>
 
 ---
 
