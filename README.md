@@ -49,10 +49,9 @@ E todo código editável/público em ambas as pastas estão dentro da pasta **sr
 ## Back-end
 
 - Pasta **dist**, contém o código build gerado pelo comando: `yarn build`.
-- Separei cada pasta/arquivo para uma determinada função:
-    - Pasta **database** onde sua função é relacionada diretamente ao banco de dados;
-    - Pasta **middlewares**, contém o arquivo que que garante que rotas privadas so seja acessadas com autenticação;
-    - Pasta **utils**, contém um arquivo de formatação de data para o front-end não ser responsável por isso;
+- Pasta **database** onde sua função é relacionada diretamente ao banco de dados;
+- Pasta **middlewares**, contém o arquivo que que garante que rotas privadas so seja acessadas com autenticação;
+- Pasta **utils**, contém um arquivo de formatação de data para o front-end não ser responsável por isso;
 - Pasta **routes**, contém as regras de negócios de cada rota do back-end.
 
 Acesse a pasta para mais informações e como iniciar o projeto clicando aqui: [Back-end](https://github.com/fajzanetti/Codificar-Processo-Seletivo/tree/master/back-end#readme).
